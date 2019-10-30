@@ -1,4 +1,4 @@
-package com.ds.sorting.Quick;
+package com.ds.sorting.quick;
 
 public class QuickSort {
 
