@@ -70,19 +70,19 @@ public class SetMatrixZeros {
         ArrayList<Integer> inner = new ArrayList<>();
         inner.add(1);
         inner.add(0);
-//        inner.add(1);
+        inner.add(1);
         outer.add(inner);
-
-//        inner = new ArrayList<>();
-//        inner.add(1);
-//        inner.add(1);
-//        inner.add(1);
-//        outer.add(inner);
 
         inner = new ArrayList<>();
         inner.add(1);
         inner.add(1);
-//        inner.add(1);
+        inner.add(1);
+        outer.add(inner);
+
+        inner = new ArrayList<>();
+        inner.add(1);
+        inner.add(1);
+        inner.add(1);
         outer.add(inner);
 
 
