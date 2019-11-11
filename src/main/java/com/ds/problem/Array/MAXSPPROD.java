@@ -1,83 +1,55 @@
 package com.ds.problem.Array;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 
 public class MAXSPPROD {
 
     public int maxSpecialProduct(ArrayList<Integer> A) {
+        int n = A.size();
+        int[] left = new int[n];
+        int[] right = new int[n];
 
+        Deque<Integer> q = new ArrayDeque<>();
+        q.addLast(0);
 
-        int leftSpecialValue = 0;
-        int rightSpecialValue = 0;
-        int max = 0;
-        int currentProduct = 0;
-
-        for(int i = 0; i < A.size(); i++) {
-
-            int j = i - 1;
-
-            while(j >= 0) {
-                if(A.get(j) > A.get(i) || j == 0){
-                    leftSpecialValue = j;
+        for(int i = 1; i < n; i++){
+            while(!q.isEmpty()){
+                if(A.get(q.getLast()) > A.get(i))
                     break;
-                }
-                j--;
+                q.removeLast();
             }
-
-            for(int k=i+1;k<A.size();k++){
-                if(leftSpecialValue == 0) {
-                    break;
-                }
-                if(A.get(k) > A.get(i)) {
-                    rightSpecialValue = k;
-                    break;
-                }
-            }
-            currentProduct = leftSpecialValue * rightSpecialValue;
-            if(currentProduct > max) {
-                max = currentProduct;
-            }
-            leftSpecialValue = 0;
-            rightSpecialValue = 0;
-
+            left[i] = (q.isEmpty()) ? 0 : q.getLast();
+            q.addLast(i);
         }
-        return max % 1000000007;
-
-
-
-
-
-//        int count = 0;
-//        for (int i = 1; i < A.size() - 1; i++) {
-//            int j = i - 1, k = i + 1;
-//            while(j >= 0) {
-//                if(A.get(j) > A.get(i) || j == 0)
-//                    break;
-//                j--;
-//            }
-//            while(k < A.size()) {
-//                if(A.get(k) > A.get(i) || k == A.size() - 1)
-//                    break;
-//                k++;
-//            }
-//            if(A.get(j) > A.get(i) && A.get(k) > A.get(i)) {
-//                int value = j * k;
-//                count = Math.max(count,value);
-//            }
-//        }
-//        return count;
+        q = new ArrayDeque<>();
+        q.addLast(n - 1);
+        for(int i = n - 2; i >= 0; i--){
+            while(!q.isEmpty()){
+                if(A.get(q.getLast()) > A.get(i))
+                    break;
+                q.removeLast();
+            }
+            right[i] = (q.isEmpty()) ? 0 : q.getLast();
+            q.addLast(i);
+        }
+        long mx = -1;
+        for(int i = 0; i < n; i++){
+            mx = Long.max(mx, 1L * left[i] * right[i]);
+        }
+        return (int)(mx % 1000000007);
     }
-
     public static void main(String[] args) {
 
-        ArrayList<Integer> inner = new ArrayList<>();
-        inner.add(4);//0
-        inner.add(2);//1
-        inner.add(3);//2
-        inner.add(1);//3
-        inner.add(2);//4
-        inner.add(3);//5
+        ArrayList<Integer> input = new ArrayList<>();
+        input.add(4);//0
+        input.add(2);//1
+        input.add(3);//2
+        input.add(1);//3
+        input.add(2);//4
+        input.add(3);//5
 
-        System.out.println(new MAXSPPROD().maxSpecialProduct(inner));
+        System.out.println(new MAXSPPROD().maxSpecialProduct(input));
     }
 }
