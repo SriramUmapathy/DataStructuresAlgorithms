@@ -3,24 +3,27 @@ package com.ds.problem.math;
 public class GridUniquePath {
 
     public static int uniquePaths(int A, int B) {
+        return  ncr(A+B-2, Math.min (A-1, B-1));
+    }
 
-        int[][] matrix = new int[A][B];
+    private static int ncr(int n, int r) {
+        System.out.println(n+" "+r);
+        long res = 1;
 
-        for (int i = 0; i < A; i++) {
-            matrix[i][B - 1] = 1;
+        int R = Math.min (r, n-r);
+        for ( int i=1; i<=R; i++){
+            res*=n;
+            n--;
+        }
+        System.out.println(res);
+        long res1 = 1;
+        for ( int i=1; i<=r; i++){
+            res1*=i;
         }
 
-        for (int i = 0; i < B; i++) {
-            matrix[A - 1][i] = 1;
-        }
 
-        for (int i = matrix.length -2; i >= 0; i--) {
-            for (int j = matrix[0].length -2; j >= 0; j--) {
-                matrix[i][j] = matrix[i+1][j] + matrix[i][j+1];
-            }
-        }
-
-        return matrix[0][0];
+        System.out.println(res1);
+        return (int) (res/res1);
     }
 
     public static void printMat(int[][] matrix){
@@ -35,6 +38,6 @@ public class GridUniquePath {
     }
 
     public static void main(String[] args) {
-        GridUniquePath.uniquePaths(3,7);
+        System.out.println(GridUniquePath.uniquePaths(3,7));
     }
 }
